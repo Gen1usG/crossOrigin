@@ -34,7 +34,7 @@ var server = http.createServer(function (request, response) {
   } else if (path === '/friends.json') {
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/json;charset=utf-8')
-    // response.setHeader('Access-Control-Allow-Origin', '*')  允许任何origin访问
+    // response.setHeader('Access-Control-Allow-Origin', '*') // 允许任何origin访问
     response.setHeader('Access-Control-Allow-Origin', 'http://gg-com:9999')
     response.write(fs.readFileSync('public/friends.json'))
     response.end()
@@ -46,7 +46,9 @@ var server = http.createServer(function (request, response) {
   } else if (path === '/friends.js') {
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
-    response.write(fs.readFileSync('public/friends.js'))
+    const data = `[{ "name": "Lily" }, { "name": "Attack" }]`
+    let string = `window['{{name}}']({{data}})`
+    response.write(string.replace('{{name}}', query.callback).replace('{{data}}', data))
     response.end()
   } else {
     response.statusCode = 404
@@ -60,5 +62,6 @@ var server = http.createServer(function (request, response) {
 
 server.listen(port)
 console.log('监听 ' + port + ' 成功\n请用在空中转体720度然后用电饭煲打开 http://localhost:' + port)
+
 
 

@@ -1,4 +1,3 @@
-
 window.xxx = [
     {
         "name": "Lily"
@@ -7,3 +6,4 @@ window.xxx = [
         "name": "Attack"
     }
 ]
+
